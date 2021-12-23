@@ -35,9 +35,13 @@ type ItemAttributes struct {
 	Lang                   string     `xml:"lang,attr"`
 	Binding                string     `xml:"Binding"`
 	Brand                  string     `xml:"Brand"`
+	ItemDimensions         Dimensions `xml:"ItemDimensions"`
 	Label                  string     `xml:"Label"`
 	Manufacturer           string     `xml:"Manufacturer"`
+	MaterialType           string     `xml:"MaterialType"`
 	ManufacturerMinimumAge Config     `xml:"ManufacturerMinimumAge"`
+	PackageDimensions      Dimensions `xml:"PackageDimensions"`
+	PackageQuantity        string     `xml:"PackageQuantity"`
 	PartNumber             string     `xml:"PartNumber"`
 	ProductGroup           string     `xml:"ProductGroup"`
 	ProductTypeName        string     `xml:"ProductTypeName"`
@@ -45,6 +49,14 @@ type ItemAttributes struct {
 	SmallImage             SmallImage `xml:"SmallImage"`
 	Studio                 string     `xml:"Studio"`
 	Title                  string     `xml:"Title"`
+
+	CategoryName           string     `xml:"CategoryName"`//并没有返回辅助字段
+}
+type Dimensions struct {
+	Height Config `xml:"Height"`
+	Weight Config `xml:"Weight"`
+	Width  Config `xml:"Width"`
+	Length Config `xml:"Length"`
 }
 type SmallImage struct {
 	URL    string `xml:"URL"`

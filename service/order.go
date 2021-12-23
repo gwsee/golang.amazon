@@ -16,7 +16,7 @@ func ListOrders() (orders []model.Order, err error) {
 	mp["SellerId"] = res.SellerId
 	mp["Version"] = "2013-09-01"
 	var obj model.ListOrdersResponse
-	err = CommonHandle("POST", "ListOrders", "/Orders/2013-09-01", res.MarketplaceID, res, mp, true, &obj)
+	err = CommonHandle("POST", "ListOrders", "/Orders/2013-09-01", res.MarketplaceID, res, mp, "xml", &obj)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
@@ -34,7 +34,7 @@ func ListOrdersByNextToken() (orders []model.Order, err error) {
 	mp["Version"] = "2013-09-01"
 	mp["NextToken"] = "qDBg6XgXnFF/YYuZQbKv1QafEPREmauvizt1MIhPYZZooPAPAiTP5ILWXerqCA7hggphpTfE/HJRBUDTTfkLYd8ytOVgN7d/KyNtf5fepe0z86MVYTeRn/84Iho8M6XprTqurxw/vfKS68vI7Bqws+weLxD7b1CV0+mtVKXnPdgGvqGqJURbBr8yRpqBNBEzllhc4XvGqg5e0zIeaOVNezxWEXvdeDL7Zg54wKetRXLniKjk2yjCAzr1Jptpxugh04A7P4TjeGcwE7+t4NjazyEZY027dXAVTSGshRBy6ZTthhfBGj6Dwh9DV8iyDXzG25news0zC1zKK3EWjgCoR9sHkzT6ertl3CH/fKi8/jvmoZh76tkAUNtc4fGQa1T1W5Hbv3f/4h9oGHvB6FqwTkrDiHqb8mBE0YT7h6RiajS56ChWWFgK767I8qrcn7mc"
 	var obj2 model.ListOrdersByNextTokenResponse
-	err = CommonHandle("POST", "ListOrdersByNextToken", "/Orders/2013-09-01", res.MarketplaceID, res, mp, true, &obj2, "AM", "D", "C")
+	err = CommonHandle("POST", "ListOrdersByNextToken", "/Orders/2013-09-01", res.MarketplaceID, res, mp, "xml", &obj2, "AM", "D", "C")
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
@@ -50,7 +50,7 @@ func ListOrdersByNextToken() (orders []model.Order, err error) {
 		}
 		var obj1 model.ListOrdersByNextTokenResponse
 		mp["NextToken"] = nextToken
-		err = CommonHandle("POST", "ListOrdersByNextToken", "/Orders/2013-09-01", res.MarketplaceID, res, mp, true, &obj1)
+		err = CommonHandle("POST", "ListOrdersByNextToken", "/Orders/2013-09-01", res.MarketplaceID, res, mp, "xml", &obj1)
 		if err != nil {
 			break
 		} else {
@@ -69,7 +69,7 @@ func GetOrder() (obj model.GetOrderResponse, err error) {
 	mp["AmazonOrderId.Id.1"] = "112-0296089-0616242" //必须
 	mp["SellerId"] = res.SellerId
 	mp["Version"] = "2013-09-01"
-	err = CommonHandle("POST", "GetOrder", "/Orders/2013-09-01", res.MarketplaceID, res, mp, true, &obj)
+	err = CommonHandle("POST", "GetOrder", "/Orders/2013-09-01", res.MarketplaceID, res, mp, "xml", &obj)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
@@ -84,7 +84,7 @@ func ListOrderItems() (obj model.ListOrderItemsResponse, err error) {
 	mp["AmazonOrderId"] = "112-0296089-0616242" //必须
 	mp["SellerId"] = res.SellerId
 	mp["Version"] = "2013-09-01"
-	err = CommonHandle("POST", "ListOrderItems", "/Orders/2013-09-01", res.MarketplaceID, res, mp, true, &obj)
+	err = CommonHandle("POST", "ListOrderItems", "/Orders/2013-09-01", res.MarketplaceID, res, mp, "xml", &obj)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {

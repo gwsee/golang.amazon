@@ -5,10 +5,11 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"github.com/axgle/mahonia"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/axgle/mahonia"
 
 	"git.zx-tech.net/pengfeng/amazon.seller/model"
 )
@@ -18,7 +19,7 @@ var SaveActionLog = false
 var SaveActionLogAns = false
 
 // ReadText response的body为字符的时候
-func ReadText(by []byte,language string) (res []map[string]string) {
+func ReadText(by []byte, language string) (res []map[string]string) {
 	var title []string
 	arr := strings.Split(string(by), "\n")
 	enc := mahonia.NewDecoder(language)
@@ -28,17 +29,20 @@ func ReadText(by []byte,language string) (res []map[string]string) {
 		}
 		if k == 0 {
 			title = strings.Split(v, "\t")
+			for k1, v1 := range title {
+				title[k1] = strings.TrimSpace(v1)
+			}
 			continue
 		}
 		item := strings.Split(v, "\t")
 		m := map[string]string{}
 		for k1, v1 := range title {
-			if enc==nil{
-				m[v1] = item[k1]
-			}else{
-				m[enc.ConvertString(v1)] = enc.ConvertString(item[k1])
+			st := strings.TrimSpace(item[k1])
+			if enc == nil {
+				m[v1] = st
+			} else {
+				m[enc.ConvertString(v1)] = enc.ConvertString(st)
 			}
-
 		}
 		res = append(res, m)
 	}
@@ -85,21 +89,7 @@ func handErr(by []byte) (err error) {
 	return
 }
 
-func saveFile(urls, method string, postData map[string]string, by []byte, errs error) (fileName string, err error) {
-	var saveObj []byte
-	saveObj = append(saveObj, []byte(urls)...)
-	saveObj = append(saveObj, '\n')
-	saveObj = append(saveObj, []byte(method)...)
-	saveObj = append(saveObj, '\n')
-	buf, _ := json.Marshal(postData)
-	saveObj = append(saveObj, buf...)
-	saveObj = append(saveObj, '\n')
-	if SaveActionLogAns || errs != nil {
-		saveObj = append(saveObj, by...)
-		saveObj = append(saveObj, '\n')
-	}
-	saveObj = append(saveObj, []byte("amazon_request_finished")...)
-	saveObj = append(saveObj, '\n')
+func saveFile(urls, method string, postData map[string]string, by []byte, ret string, errs error) (fileName string, err error) {
 	now := time.Now()
 	logFilePath := ""
 	if dir, err := os.Getwd(); err == nil {
@@ -109,18 +99,64 @@ func saveFile(urls, method string, postData map[string]string, by []byte, errs e
 			logFilePath = dir + SaveActionDir + "/amazon_log/" + now.Format("200601") + "/" + now.Format("02") + "_errs/"
 		}
 	}
-	if _, err = os.Stat(logFilePath); os.IsNotExist(err) {
+	if _, err2 := os.Stat(logFilePath); os.IsNotExist(err2) {
 		os.MkdirAll(logFilePath, 0777)
 		os.Chmod(logFilePath, 0777)
 	}
-	logFileName := now.Format("1504") + ".log"
-	fileName = logFilePath + logFileName
-	fileObj, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		return
+	{
+		// 请求记录
+		var saveObj []byte
+		saveObj = append(saveObj, []byte(urls)...)
+		saveObj = append(saveObj, '\n')
+		saveObj = append(saveObj, []byte(method)...)
+		saveObj = append(saveObj, '\n')
+		buf, _ := json.Marshal(postData)
+		saveObj = append(saveObj, buf...)
+		saveObj = append(saveObj, '\n')
+		if errs != nil {
+			saveObj = append(saveObj, []byte(ret)...)
+			saveObj = append(saveObj, '\n')
+			saveObj = append(saveObj, []byte(errs.Error())...)
+			saveObj = append(saveObj, '\n')
+		}
+		saveObj = append(saveObj, []byte("amazon_request_finished")...)
+		saveObj = append(saveObj, '\n')
+
+		logFileName := now.Format("1504") + ".log"
+		fileName = logFilePath + logFileName
+		fileObj, err1 := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		if err1 != nil {
+			err = err1
+			return
+		}
+		defer fileObj.Close()
+		fileObj.Write(saveObj)
 	}
-	defer fileObj.Close()
-	fileObj.Write(saveObj)
 	//保存文件结束！！
+	if ret != "" && errs == nil && SaveActionLogAns {
+		no := now.Format("1504") + fmt.Sprintf("_%v", time.Now().UnixNano())
+		{
+			logFileName := no + "." + ret
+			fileName = logFilePath + logFileName
+			fileObj, err1 := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+			if err1 != nil {
+				err = err1
+				return
+			}
+			defer fileObj.Close()
+			fileObj.Write(by)
+		}
+		//{
+		//	logFileName := no + ".json"
+		//	fileName = logFilePath + logFileName
+		//	fileObj, err1 := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		//	if err1 != nil {
+		//		err = err1
+		//		return
+		//	}
+		//	defer fileObj.Close()
+		//}
+
+	}
 	return
 }

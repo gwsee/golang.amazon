@@ -32,7 +32,7 @@ Get
 
 //Get 获取amazon密钥等
 func (a AmazonAuth) Get(ty string) (auth model.AuthObject) {
-	//根据ty获取不同区域的 秘钥等
+
 	return
 }
 func initParam(act string) (i model.IndexParams) {
@@ -46,6 +46,7 @@ func initParam(act string) (i model.IndexParams) {
 
 //Header 亚马逊头
 func (a AmazonAuth) Header() (m map[string]string) {
+
 	return
 }
 
@@ -80,6 +81,7 @@ func (a AmazonAuth) Sort(mp map[string]string) (res string) {
 		strArr = append(strArr, url.QueryEscape(v)+"="+url.QueryEscape(val))
 	}
 	res = strings.Join(strArr, "&")
+	res = strings.Replace(res, "+", "%20", -1) //encode的时候空格变成+ 但是需要是 %20
 	return
 }
 func (a AmazonAuth) Map(mpOld map[string]string) map[string]string {

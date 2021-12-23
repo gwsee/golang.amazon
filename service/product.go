@@ -18,7 +18,7 @@ func GetMatchingProduct() (err error) {
 	mp["SellerId"] = res.SellerId
 	mp["Version"] = "2011-10-01"
 	var obj model.GetMatchingProductResponse
-	err = CommonHandle("POST", "GetMatchingProduct", "/Products/2011-10-01", res.MarketplaceID, res, mp, true, &obj)
+	err = CommonHandle("POST", "GetMatchingProduct", "/Products/2011-10-01", res.MarketplaceID, res, mp, "xml", &obj)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
@@ -30,17 +30,26 @@ func GetMatchingProduct() (err error) {
 }
 func GetMatchingProductForId() (err error) {
 	var a AmazonAuth
-	res := a.Get("日本")
+	res := a.Get("北美-david")
 	mp := make(map[string]string)
-	mp["IdList.Id.1"] = "PD00OPHCPJP00573-02" //必须
-	//mp["IdList.Id.2"] = "PD00OPHCPJP00574-02" //必须
-	//mp["IdList.Id.3"] = "PD00OPHCPJP00652-01" //必须
+	/**
+	PD135001WZF00000-1
+	PD135001WZF00000-FBA
+	PD135001WZF00001-FBA
+	PD135001WZF
+	PD135001
+	 */
+	mp["IdList.Id.1"] = "PD135001WZF00000-1" //必须
+	mp["IdList.Id.2"] = "PD135001WZF00000-FBA" //必须
+	mp["IdList.Id.3"] = "PD135001WZF00001-FBA" //必须
+	mp["IdList.Id.4"] = "PD135001WZF" //必须
+	mp["IdList.Id.5"] = "PD135001" //必须
 	mp["MarketplaceId"] = res.MarketplaceID //必须
 	mp["SellerId"] = res.SellerId
 	mp["Version"] = "2011-10-01"
 	mp["IdType"] = "SellerSKU"
 	var obj model.GetMatchingProductForIdResponse
-	err = CommonHandle("POST", "GetMatchingProductForId", "/Products/2011-10-01", res.MarketplaceID, res, mp, true, &obj)
+	err = CommonHandle("POST", "GetMatchingProductForId", "/Products/2011-10-01", res.MarketplaceID, res, mp, "xml", &obj)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
@@ -61,7 +70,7 @@ func GetMyPriceForASIN() (err error) {
 	mp["SellerId"] = res.SellerId
 	mp["Version"] = "2011-10-01"
 	var obj model.GetMyPriceForASINResponse
-	err = CommonHandle("POST", "GetMyPriceForASIN", "/Products/2011-10-01", res.MarketplaceID, res, mp, true, &obj)
+	err = CommonHandle("POST", "GetMyPriceForASIN", "/Products/2011-10-01", res.MarketplaceID, res, mp, "xml", &obj)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {

@@ -304,3 +304,123 @@ type GetMerchantListingsAllDataJp struct {
 	MerchantShippingGroup string `json:"merchant-shipping-group"`
 	Status                string `json:"ステータス"`
 }
+
+// 亚马逊库存报告--亚马逊物流管理库存 - 存档  -- _GET_FBA_MYI_ALL_INVENTORY_DATA_（日文和英文一致，只是解析的时候需要用日文编码就行）
+type GetFbaMyiAllInventoryData struct {
+	Sku                         string `json:"sku"`
+	Fnsku                       string `json:"fnsku"`
+	Asin                        string `json:"asin"`
+	ProductName                 string `json:"product-name"`
+	Condition                   string `json:"condition"`
+	YourPrice                   string `json:"your-price"`
+	MfnListingExists            string `json:"mfn-listing-exists"`
+	MfnFulfillableQuantity      string `json:"mfn-fulfillable-quantity"`
+	AfnListingExists            string `json:"afn-listing-exists"`
+	AfnWarehouseQuantity        string `json:"afn-warehouse-quantity"`
+	AfnFulfillableQuantity      string `json:"afn-fulfillable-quantity"`
+	AfnUnsellableQuantity       string `json:"afn-unsellable-quantity"`
+	AfnReservedQuantity         string `json:"afn-reserved-quantity"`
+	AfnTotalQuantity            string `json:"afn-total-quantity"`
+	PerUnitVolume               string `json:"per-unit-volume"`
+	AfnInboundWorkingQuantity   string `json:"afn-inbound-working-quantity"`
+	AfnInboundShippedQuantity   string `json:"afn-inbound-shipped-quantity"`
+	AfnInboundReceivingQuantity string `json:"afn-inbound-receiving-quantity"`
+	AfnResearchingQuantity      string `json:"afn-researching-quantity"`
+	AfnReservedFutureSupply     string `json:"afn-reserved-future-supply"`
+	AfnFutureSupplyBuyable      string `json:"afn-future-supply-buyable"`
+}
+
+//亚马逊物流退货报告 _GET_FBA_FULFILLMENT_CUSTOMER_RETURNS_DATA_（日文和英文一致，只是解析的时候需要用日文编码就行）
+
+type GetFbaFulfillmentCustomerReturnsData struct {
+	ReturnedDate     string `json:"return-date"`
+	OrderID          string `json:"order-id"`
+	MerchantSKU      string `json:"sku"`
+	ASIN             string `json:"asin"`
+	FNSKU            string `json:"fnsku"`
+	Title            string `json:"product-name"`
+	Quantity         string `json:"quantity"`
+	FC               string `json:"fulfillment-center-id"`
+	Disposition      string `json:"detailed-disposition"`
+	Reason           string `json:"reason"`
+	Status           string `json:"status"`
+	Lpn              string `json:"license-plate-number"`
+	CustomerComments string `json:"customer-comments"`
+}
+
+type GetFbaFulfillmentCustomerReturnsDataJp struct {
+	ReturnedDate     string `json:"Returned Date"`
+	OrderID          string `json:"Order ID"`
+	MerchantSKU      string `json:"Merchant SKU"`
+	ASIN             string `json:"ASIN"`
+	FNSKU            string `json:"FNSKU"`
+	Title            string `json:"Title"`
+	Quantity         string `json:"Quantity"`
+	FC               string `json:"FC"`
+	Disposition      string `json:"Disposition"`
+	Reason           string `json:"Reason"`
+	Lpn              string `json:"lpn"`
+	CustomerComments string `json:"Customer comments"`
+}
+
+// _GET_FBA_FULFILLMENT_CURRENT_INVENTORY_DATA_ 亚马逊物流每日库存历史报告（日文和英文一致，只是解析的时候需要用日文编码就行）
+type GetFbaFulfillmentCurrentInventoryData struct {
+	SnapshotDate        string `json:"snapshot-date"`
+	Fnsku               string `json:"fnsku"`
+	Sku                 string `json:"sku"`
+	ProductName         string `json:"product-name"`
+	Quantity            string `json:"quantity"`
+	FulfillmentCenterId string `json:"fulfillment-center-id"`
+	DetailedDisposition string `json:"detailed-disposition"`
+	Country             string `json:"country"`
+}
+
+// _GET_FBA_STORAGE_FEE_CHARGES_DATA_ 亚马逊库存费用报告（日文和英文一致，只是解析的时候需要用日文编码就行）--即月仓储费
+type GetFbaStorageFeeChargesData struct {
+	Asin                          string `json:"asin"`
+	Fnsku                         string `json:"fnsku"`
+	ProductName                   string `json:"product_name"`
+	FulfillmentCenter             string `json:"fulfillment_center"`
+	CountryCode                   string `json:"country_code"`
+	LongestSide                   string `json:"longest_side"`
+	MedianSide                    string `json:"median_side"`
+	ShortestSide                  string `json:"shortest_side"`
+	MeasurementUnits              string `json:"measurement_units"`
+	Weight                        string `json:"weight"`
+	WeightUnits                   string `json:"weight_units"`
+	ItemVolume                    string `json:"item_volume"`
+	VolumeUnits                   string `json:"volume_units"`
+	ProductSizeTier               string `json:"product_size_tier"`
+	AverageQuantityOnHand         string `json:"average_quantity_on_hand"`
+	AverageQuantityPendingRemoval string `json:"average_quantity_pending_removal"`
+	EstimatedTotalItemVolume      string `json:"estimated_total_item_volume"`
+	MonthOfCharge                 string `json:"month_of_charge"`
+	StorageRate                   string `json:"storage_rate"`
+	Currency                      string `json:"currency"`
+	EstimatedMonthlyStorageFee    string `json:"estimated_monthly_storage_fee"`
+	DangerousGoodsStorageType     string `json:"dangerous_goods_storage_type"`
+	EligibleForInventoryDiscount  string `json:"eligible_for_inventory_discount"`
+	QualifiesForInventoryDiscount string `json:"qualifies_for_inventory_discount"`
+	TotalIncentiveFeeAmount       string `json:"total_incentive_fee_amount"`
+	BreakdownIncentiveFeeAmount   string `json:"breakdown_incentive_fee_amount"`
+	AverageQuantityCustomerOrders string `json:"average_quantity_customer_orders"`
+}
+
+//_GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA_ 弃置费
+type GetFbaFulfillmentRemovalOrderDetailData struct {
+	RequestDate       string `json:"request-date"`
+	OrderId           string `json:"order-id"`
+	OrderType         string `json:"order-type"`
+	OrderStatus       string `json:"order-status"`
+	LastUpdatedDate   string `json:"last-updated-date"`
+	Sku               string `json:"sku"`
+	Fnsku             string `json:"fnsku"`
+	Disposition       string `json:"disposition"`
+	RequestedQuantity string `json:"requested-quantity"`
+	CancelledQuantity string `json:"cancelled-quantity"`
+	DisposedQuantity  string `json:"disposed-quantity"`
+	ShippedQuantity   string `json:"shipped-quantity"`
+	InProcessQuantity string `json:"in-process-quantity"`
+	RemovalFee        string `json:"removal-fee"`
+	Currency          string `json:"currency"`
+}

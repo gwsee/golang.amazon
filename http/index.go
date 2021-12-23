@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-func Action(method, urls, action string, postData map[string]string, headers map[string]string) (by []byte, err error) {
+func Action(method, urls, action string, postData map[string]string, headers map[string]string, ret string) (by []byte, err error) {
 	var req *http.Request
 	if strings.Contains(action, "json") {
 		buf, _ := json.Marshal(postData)
@@ -47,7 +47,7 @@ func Action(method, urls, action string, postData map[string]string, headers map
 	}
 	err = handErr(by)
 	if SaveActionLog || err != nil {
-		_, err1 := saveFile(urls, method, postData, by, err)
+		_, err1 := saveFile(urls, method, postData, by, ret, err)
 		if err1 != nil {
 			fmt.Println(err1.Error(), "err1.Error")
 		}

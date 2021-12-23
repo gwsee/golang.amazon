@@ -81,11 +81,11 @@ func (a AmazonSellerConfig) GetReportURL(id string) (url string) {
 		url = "https://mws-eu.amazonservices.com"
 
 		//远东(Far East)地区
-	case "A19VAU5U5O7RUS": //
+	case "A19VAU5U5O7RUS": //新加坡
 		url = "https://mws-fe.amazonservices.com"
-	case "A39IBJ37TRP1C6": //
+	case "A39IBJ37TRP1C6": //澳大利亞
 		url = "https://mws.amazonservices.com.au"
-	case "A1VC38T7YXB528": //
+	case "A1VC38T7YXB528": //日本
 		url = "https://mws.amazonservices.jp"
 
 	}

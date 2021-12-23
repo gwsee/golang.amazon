@@ -41,6 +41,7 @@ type Order struct {
 	IsGlobalExpressEnabled         bool                   `xml:"IsGlobalExpressEnabled" json:"is_global_express_enabled,omitempty"`
 	IsPrime                        bool                   `xml:"IsPrime" json:"is_prime,omitempty"`
 	IsReplacementOrder             bool                   `xml:"IsReplacementOrder" json:"is_replacement_order,omitempty"`
+	ReplacedOrderId                string                 `xml:"ReplacedOrderId" json:"replaced_order_id,omitempty"`
 	IsSoldByAB                     bool                   `xml:"IsSoldByAB" json:"is_sold_by_ab,omitempty"`
 	EarliestDeliveryDate           string                 `xml:"EarliestDeliveryDate" json:"earliest_delivery_date,omitempty"` //您承诺的订单送达时间范围的第一天
 	IsPremiumOrder                 bool                   `xml:"IsPremiumOrder" json:"is_premium_order,omitempty"`
@@ -54,8 +55,9 @@ type Order struct {
 }
 
 type Money struct {
-	CurrencyCode string `xml:"CurrencyCode" json:"currency_code,omitempty"`
-	Amount       string `xml:"Amount" json:"amount,omitempty"`
+	CurrencyCode string `xml:"CurrencyCode" json:"currency_code"` //,omitempty为什么会有这个 忘记了 先去掉
+	Amount       string `xml:"Amount" json:"amount"`
+	CurrencyAmount   string `xml:"CurrencyAmount" json:"currency_amount"`
 }
 type Address struct {
 	Name                         string `xml:"Name"`
